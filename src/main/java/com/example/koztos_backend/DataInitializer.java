@@ -39,7 +39,8 @@ public class DataInitializer implements CommandLineRunner {
 
         // Roles con sus permisos
         createRoleIfNotExists("ADMIN", "ROL ADMIN", Set.of(adminPermission));
-
+        createRoleIfNotExists("OPERATIVO", "ROL OPERATIVO", Set.of());
+        createRoleIfNotExists("APROBADOR", "ROL APROBADOR", Set.of());
     }
 
 

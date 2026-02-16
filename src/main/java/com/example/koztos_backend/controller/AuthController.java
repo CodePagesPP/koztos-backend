@@ -16,6 +16,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/auth")
 
@@ -33,6 +35,27 @@ public class AuthController {
     @PostMapping("/registerUser")
     public ResponseEntity<UserDTO> register(@RequestBody UserCreateDTO request){
         return ResponseEntity.ok(userService.registerUser(request));
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(required = false) String role) {
+        return ResponseEntity.ok(userService.getUsersByRole(role));
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable long id, @RequestBody UserCreateDTO dto) {
+        return ResponseEntity.ok(userService.updateUser(id, dto));
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/profile")
