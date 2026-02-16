@@ -63,22 +63,16 @@ public class UserServiceImpl implements UserService {
         RoleE roleEntity = roleRepository.findByName(dto.getRole())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + dto.getRole()));
 
-
         User userToSave;
 
-        switch (dto.getRole()) {
-            case "ADMIN":
-
-                userToSave = Admin.builder().build();
-                break;
-
-
-            default:
-                throw new IllegalArgumentException("Tipo de rol no soportado para registro");
+        if ("ADMIN".equalsIgnoreCase(dto.getRole())) {
+            userToSave = new Admin();
+        } else {
+            userToSave = new User();
         }
 
-
         userToSave.setDni(dto.getDni());
+        userToSave.setUsername(dto.getUsername());
         userToSave.setName(dto.getName());
         userToSave.setLastName(dto.getLastName());
         userToSave.setSex(dto.getSex());
@@ -86,9 +80,7 @@ public class UserServiceImpl implements UserService {
         userToSave.setRole(roleEntity);
         userToSave.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
 
-
         User savedUser = userRepository2.save(userToSave);
-
         return mapToDTO(savedUser);
     }
 
