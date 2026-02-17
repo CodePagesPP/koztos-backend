@@ -51,7 +51,9 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**",
                                 "/rol/**",
                                 "/permission/**",
-                                "/users/**").hasAnyAuthority("ADMIN_ACCESS")
+                                "/users/**",
+                                "/gastos/**",
+                                "/tipo-gasto/**").hasAnyAuthority("ADMIN_ACCESS")
                         .requestMatchers("/rol/**").hasAuthority("ROLE_ACCESS")
                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex
